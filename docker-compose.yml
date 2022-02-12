@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: ./
+      args:
+        - PORT
+        - DATABASE_URL
+    ports:
+      - 3000:3000
+    restart: always
+    environment:
+      - PORT=3000
+      - DATABASE_URL=postgres://user:password@pg:5432/app_db
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - pg
+    command: npm run start
+
+  pg:
+    image: postgres
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=app_db
+    volumes:
+      - ./data/pgdata:/var/lib/postgresql/data:rw
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 5555:80
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=adrian@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=password
+    depends_on:
+      - pg

@@ -1,0 +1,21 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon .",
+    "migrate": "node-pg-migrate"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.17.2",
+    "node-pg-migrate": "6.2.1",
+    "pg": "8.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.15"
+  }
+}
